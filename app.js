@@ -1,5 +1,6 @@
 require("dotenv").config()
 require("express-async-errors")
+const {errorHandlerMidddleware} = require('./errormiddleware/errorHandler')
 const cookieParser = require("cookie-parser")
 const express = require("express")
 const mongoose = require("mongoose")
@@ -14,6 +15,8 @@ app.use(cors())
 app.use(cookieParser())
 app.use(noauthroute)
 app.use('/',authMiddleware,authroute)
+app.use(errorHandlerMidddleware)
+
 
 const port = process.env.PORT || 5000
 

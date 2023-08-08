@@ -6,9 +6,7 @@ const userSchema = new mongoose.Schema( {
     username:{type:String,required:[true,"Please provide your username"]},
     email:{type:String,required:[true,"Please provide your email"],unique:[true,"email already exist"]},
     password:{type:String,minLength:[6,"Password length should be greater than 5"],required:[true,'Password must be provided']},
-    recipes:[{type:mongoose.Types.ObjectId, ref:"Recipe"}],
-    
-    
+    recipes:[{type:mongoose.Schema.ObjectId, ref:"Recipe"}]  
 },
 {
     timestamps:true
@@ -20,7 +18,7 @@ const recipeSchema = new mongoose.Schema({
     ingredients: [String],
     process: [{step : Number,
         detail : String}],
-    createdBy:{type:mongoose.Types.ObjectId, ref:"Users",required:[true, "All recipes must be posted by the user"]},
+    createdBy:{type:mongoose.Schema.ObjectId, ref:"Users",required:[true, "All recipes must be posted by the user"]},
 },{
     timestamps:true
 })

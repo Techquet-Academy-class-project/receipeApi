@@ -1,5 +1,5 @@
 const express = require("express")
-const {createNewRecipe, mymeals,deleteId, editId, getProfile, editProfile, changePassword} = require('../controllers/authcontrollers')
+const {createNewRecipe, mymeals,deleteId, editId, getProfile, editProfile, changePassword} = require('../Controllers/authcontrollers')
 
 const router = express.Router()
 

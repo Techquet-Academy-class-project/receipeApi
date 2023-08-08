@@ -20,8 +20,9 @@ module.exports.getAuser = async (req,res)=>{
 
 module.exports.signup = async(req,res)=>{
     const user = await Users.create({...req.body})
-    const token = jwt.sign({userId:user._id}, process.env.JWT_TOKEN,{expiresIn:'7d'})
-    res.cookie('authorization', token,{httpOnly:true, secure:true,sameSite:'None', maxAge: 30*24*60*60*1000})
+    const token = jwt.sign({userId:user._id}, process.env.JWT_TOKEN)
+    res.cookie('authorization', token)
+    //{httpOnly:true, secure:true,sameSite:'None', maxAge: 30*24*60*60*1000}
     return res.status(200).json({message:"Created successfully"})
 }
 
@@ -32,8 +33,8 @@ module.exports.login = async(req,res)=>{
         return res.status(404).json({message : "No user found", success : false})
     }
     if(await bcrypt.compare(password,user.password)){
-    const token = jwt.sign({userId:user._id}, process.env.JWT_TOKEN,{expiresIn:'7d'})
-    res.cookie('authorization', token,{httpOnly:true, secure:true,sameSite:'None', maxAge: 30*24*60*60*1000})
+    const token = jwt.sign({userId:user._id}, process.env.JWT_TOKEN)
+    res.cookie('authorization', token)
     return res.status(200).json({message :"succesfully logged in", success: true})
     }
     return res.status(404).json({data : null, message : "Invalid password", success : false})

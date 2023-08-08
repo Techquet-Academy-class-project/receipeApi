@@ -1,6 +1,6 @@
 
 const express = require("express")
-const {getRecipe,getArecipe,getAuser,signup,login, logout} = require('../controllers/noauthcontrollers')
+const {getRecipe,getArecipe,getAuser,signup,login, logout} = require('../Controllers/noauthcontrollers')
 
 const router = express.Router()
 
