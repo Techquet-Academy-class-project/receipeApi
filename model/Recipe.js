@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const recipeSchema = new mongoose.Schema(
 	{
-		name: {
+		recipeName: {
 			type: String,
 			required: [true, "Enter the recipe name"],
 			unique: true,
@@ -16,11 +16,12 @@ const recipeSchema = new mongoose.Schema(
 
 		ingredient: [String],
 
-		process: [
+		cookingProcess: [
 			{
 				step: Number,
 				detail: String,
-			}],
+			},
+		],
 
 		createdBy: {
 			type: mongoose.SchemaTypes.ObjectId,

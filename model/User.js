@@ -25,7 +25,6 @@ const userSchema = new mongoose.Schema(
 			type: String,
 			required: [true, "Please enter your password"],
 			minLength: [8, "Password cannot be less than eight digits"],
-			// immutable: true,
 		},
 		recipes: [
 			{
@@ -34,11 +33,6 @@ const userSchema = new mongoose.Schema(
 				required: true,
 			},
 		],
-
-		lastPasswordUpdate: {
-			type: Date,
-			default: null,
-		},
 	},
 	{ timestamps: true }
 );
