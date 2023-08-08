@@ -63,6 +63,6 @@ module.exports.changePassword = async(req,res)=>{
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(password,salt)
     const user = await Users.findOneAndUpdate({_id:req.user._id},{password:hashedPassword})
-    return res.cookie("authorization", "", { maxAge: 1 }).status(200).json({message:"Password changed suucessfully"})
+    return res.cookie("authorization", "", { maxAge: 1 }).status(200).json({message:"Password changed sucessfully"})
 }
 

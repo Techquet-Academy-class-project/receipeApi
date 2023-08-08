@@ -14,7 +14,6 @@ if (!refreshtoken){
 }
 const payload = jwt.verify(refreshtoken, process.env.JWT_TOKEN)
 
-console.log('payloadTime:',payload.iat * 1000)
     if(!payload){
         return res.status(401).json({msg:"Not authorized to access this route"})
     } 
@@ -22,7 +21,6 @@ console.log('payloadTime:',payload.iat * 1000)
     
     if(!user) return res.json({data: user, message : "No user found", success : false})
 
-    console.log('updatedAt:',user.createdAt.getTime() ) 
     if (user.createdAt.getTime() > payload.iat * 1000){   
       return  res.status(401).json({msg: "You are not authorized to access this profile"}) 
     }
