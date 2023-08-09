@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema(
 			unique: true,
 			lowercase: true,
 		},
+
 		password: {
 			type: String,
 			required: [true, "Please enter your password"],
@@ -33,6 +34,10 @@ const userSchema = new mongoose.Schema(
 				required: true,
 			},
 		],
+		lastPasswordUpdate: {
+			type: Date,
+			default: null,
+		},
 	},
 	{ timestamps: true }
 );

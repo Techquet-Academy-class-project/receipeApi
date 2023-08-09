@@ -10,4 +10,16 @@ const getUser = asyncHandler(async (req, res) => {
 	res.json({ data: user });
 });
 
-module.exports = { getUser };
+const getUsers = asyncHandler(async (req, res) => {
+	const users = await User.find();
+	return res.json({ data: users, success: true });
+});
+
+const userProfile = asyncHandler(async (req, res) => {
+	const userInfo = await User.find({ _id: req.user._id }, "-recipes");
+	const user = await User.find({ _id: req.user._id }).select("recipes -_id");
+	const cydd = user.map((value) => value.recipes.length);
+	return res.json({ userInfo, NumberOfMeals: Number(cydd.join("")) });
+});
+
+module.exports = { getUser, getUsers, userProfile };
