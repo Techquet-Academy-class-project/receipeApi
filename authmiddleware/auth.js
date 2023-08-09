@@ -21,7 +21,7 @@ const payload = jwt.verify(refreshtoken, process.env.JWT_TOKEN)
     
     if(!user) return res.json({data: user, message : "No user found", success : false})
 
-    if (user.createdAt.getTime() > payload.iat * 1000){   
+    if (new Date(user.changedPasswordTime).getTime() > payload.iat * 1000){   
       return  res.status(401).json({msg: "You are not authorized to access this profile"}) 
     }
 

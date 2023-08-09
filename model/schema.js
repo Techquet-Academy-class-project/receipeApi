@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema( {
     email:{type:String,required:[true,"Please provide your email"],unique:[true,"email already exist"]},
     password:{type:String,minLength:[6,"Password length should be greater than 5"],required:[true,'Password must be provided']},
     recipes:[{type:mongoose.Schema.ObjectId, ref:"Recipe"}],
+    changedPasswordTime:{type:Date, default:Date.now()}
 },
 {
     timestamps:true
