@@ -11,15 +11,21 @@ const getUser = asyncHandler(async (req, res) => {
 });
 
 const getUsers = asyncHandler(async (req, res) => {
-	const users = await User.find({},"-password -lastPasswordUpdate -createdAt -updatedAt");
+	const users = await User.find(
+		{},
+		"-password -lastPasswordUpdate -createdAt -updatedAt"
+	);
 	return res.json({ data: users, success: true });
 });
 
 const userProfile = asyncHandler(async (req, res) => {
-	const userInfo = await User.find({ _id: req.user._id }, "-recipes");
-	const user = await User.find({ _id: req.user._id }).select("recipes -_id");
-	const cydd = user.map((value) => value.recipes.length);
-	return res.json({ userInfo, NumberOfMeals: Number(cydd.join("")) });
+	const userInfo = await User.findOne({ _id: req.user._id }, 
+		"-recipes -password -lastPasswordUpdate -createdAt -updatedAt");
+	const user = await User.find({ _id: req.user._id }).select(
+		"recipes"
+	);
+	const mealLength = user.map((value) => value.recipes.length);
+	return res.json({ userInfo, NumberOfMeals: Number(mealLength.join("")) });
 });
 
 module.exports = { getUser, getUsers, userProfile };

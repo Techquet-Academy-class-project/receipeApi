@@ -11,14 +11,14 @@ const addRecipe = asyncHandler(async (req, res) => {
 	});
 
 	await User.updateOne({ _id: req.user._id }, { $push: { recipes: recipe } });
-	res.json({ recipe }, "firstName lastName username");
+	res.json({ recipe });
 });
 
 const getRecipes = asyncHandler(async (req, res) => {
-	const recipes = await Recipe.find({}, "_id recipeName tribe, ingredients").populate(
-		"createdBy",
-		"firstName lastName username -_id"
-	);
+	const recipes = await Recipe.find(
+		{},
+		"_id recipeName tribe, ingredients"
+	).populate("createdBy", "firstName lastName username -_id");
 	res.json({ recipes });
 });
 
@@ -35,7 +35,7 @@ const getRecipe = asyncHandler(async (req, res) => {
 });
 
 const updateRecipe = asyncHandler(async (req, res) => {
-	const recipe = await Recipe.findOne({
+	const recipe = await Recipe.findOneAndupdate({
 		_id: req.params._id,
 		createdBy: req.user._id,
 	});
@@ -44,7 +44,6 @@ const updateRecipe = asyncHandler(async (req, res) => {
 			message: "You cannot update a recipe that's not yours",
 			success: false,
 		});
-	await Recipe.updateOne({ _id: req.params._id }, req.body);
 	return res.json({ message: "recipe updated successfully", success: true });
 });
 
@@ -60,12 +59,12 @@ const deleteRecipe = asyncHandler(async (req, res) => {
 	return res.json({ message: "recipe successfully deleted" });
 });
 
-
 const myMeals = asyncHandler(async (req, res) => {
-	const meals = await User.findById({_id: req.user._id}).select("recipes -_id").populate("recipes", "recipeName tribe");
-	res.json({meals})
+	const meals = await User.findById({ _id: req.user._id })
+		.select("recipes -_id")
+		.populate("recipes", "recipeName tribe");
+	res.json({ meals });
 });
-
 
 module.exports = {
 	addRecipe,
