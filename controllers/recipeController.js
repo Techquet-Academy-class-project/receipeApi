@@ -15,7 +15,7 @@ const addRecipe = asyncHandler(async (req, res) => {
 });
 
 const getRecipes = asyncHandler(async (req, res) => {
-	const recipes = await Recipe.find({}).populate(
+	const recipes = await Recipe.find({}, "_id recipeName tribe, ingredients").populate(
 		"createdBy",
 		"firstName lastName username -_id"
 	);

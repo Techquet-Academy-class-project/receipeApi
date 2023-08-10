@@ -5,13 +5,13 @@ const { Recipe } = require("../model/Recipe");
 const getUser = asyncHandler(async (req, res) => {
 	const user = await User.findById(
 		{ _id: req.params.id },
-		"-password"
-	).populate("recipes");
+		"-password -lastPasswordUpdate -createdAt -updatedAt"
+	).populate("recipes", "recipeName tribe ingredient");
 	res.json({ data: user });
 });
 
 const getUsers = asyncHandler(async (req, res) => {
-	const users = await User.find();
+	const users = await User.find({},"-password -lastPasswordUpdate -createdAt -updatedAt");
 	return res.json({ data: users, success: true });
 });
 
