@@ -5,7 +5,7 @@ const { Recipe } = require("../model/Recipe");
 const getUser = asyncHandler(async (req, res) => {
 	const user = await User.findById(
 		{ _id: req.params.id },
-		"-password -lastPasswordUpdate -createdAt -updatedAt"
+		"-password -createdAt -lastPasswordUpdate -updatedAt"
 	).populate("recipes", "recipeName tribe ingredient");
 	res.json({ data: user });
 });
@@ -13,17 +13,17 @@ const getUser = asyncHandler(async (req, res) => {
 const getUsers = asyncHandler(async (req, res) => {
 	const users = await User.find(
 		{},
-		"-password -lastPasswordUpdate -createdAt -updatedAt"
-	);
+		"-password -createdAt -lastPasswordUpdate -updatedAt"
+	).populate("recipes", "recipeName");
 	return res.json({ data: users, success: true });
 });
 
 const userProfile = asyncHandler(async (req, res) => {
-	const userInfo = await User.findOne({ _id: req.user._id }, 
-		"-recipes -password -lastPasswordUpdate -createdAt -updatedAt");
-	const user = await User.find({ _id: req.user._id }).select(
-		"recipes"
+	const userInfo = await User.findOne(
+		{ _id: req.user._id },
+		"-recipes -password -lastPasswordUpdate -createdAt -updatedAt"
 	);
+	const user = await User.find({ _id: req.user._id }).select("recipes");
 	const mealLength = user.map((value) => value.recipes.length);
 	return res.json({ userInfo, NumberOfMeals: Number(mealLength.join("")) });
 });

@@ -11,8 +11,9 @@ const isAuthorized = asyncHandler(async (req, res, next) => {
 			data: null,
 		});
 	const decodedData = jwt.verify(token, process.env.SECRET_KEY);
-
-	const user = await User.findById(decodedData._id).populate("recipes");
+	const user = await User.findById({ _id: decodedData._id }).populate(
+		"recipes"
+	);
 	const iat = decodedData.iat * 1000;
 	if (iat < new Date(user.lastPasswordUpdate).getTime())
 		return res.status(401).json({

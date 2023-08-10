@@ -8,6 +8,7 @@ require("./config/dbConnection");
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
+
 app.use("/api/auth", require("./routes/authRoutes"));
 
 app.use("/api/recipes", require("./routes/recipeRoutes"));

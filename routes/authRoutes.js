@@ -1,10 +1,14 @@
 const express = require("express");
-const { signUp, login, logout, changePassword } = require("../controllers/authController");
+const {
+	signUp,
+	login,
+	logout,
+	changePassword,
+} = require("../controllers/authController");
 const { isAuthorized } = require("../middleware/authorization");
-const cors = require("cors")
+const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const router = express.Router();
-
 
 router.use(express.json());
 router.use(cors());
@@ -14,11 +18,8 @@ router.post("/signUp", signUp);
 
 router.post("/login", login);
 
-router.get("/logout", isAuthorized, logout);
+router.get("/logout", logout);
 
-router.post("/change-password", isAuthorized, changePassword);
-
-
-
+router.put("/change-password", isAuthorized, changePassword);
 
 module.exports = router;

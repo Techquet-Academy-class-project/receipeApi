@@ -36,7 +36,7 @@ const userSchema = new mongoose.Schema(
 		],
 		lastPasswordUpdate: {
 			type: Date,
-			default: null,
+			default: Date.now(),
 		},
 	},
 	{ timestamps: true }

@@ -4,13 +4,14 @@ const asyncHandler = require("express-async-handler");
 const { User } = require("../model/User");
 
 const addRecipe = asyncHandler(async (req, res) => {
-	req.user._id = req.body.createdBy;
 	const recipe = await Recipe.create({
 		...req.body,
 		createdBy: req.user._id,
 	});
-
-	await User.updateOne({ _id: req.user._id }, { $push: { recipes: recipe } });
+	await User.updateOne(
+		{ _id: req.user._id },
+		{ $push: { recipes: recipe._id } }
+	);
 	res.json({ recipe });
 });
 
@@ -52,6 +53,10 @@ const deleteRecipe = asyncHandler(async (req, res) => {
 		_id: req.params.id,
 		createdBy: req.user._id,
 	});
+	await User.updateOne(
+		{ _id: req.user._id },
+		{ $pull: { recipes: recipe._id } }
+	);
 	if (!recipe)
 		return res.json({
 			mesage: "You cannot this recipe because it's not yours",
