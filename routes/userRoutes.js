@@ -10,9 +10,9 @@ router.use(cors());
 router.use(cookieParser());
 
 
-router.get("/get-user/:id", isAuthorized, getUser);
 router.get("/user-profile", isAuthorized, userProfile);
-router.get("/get-users", getUsers);
+router.get("/all-users", getUsers);
+router.get("/:id", isAuthorized, getUser);
 
 
 

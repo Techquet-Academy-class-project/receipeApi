@@ -7,7 +7,8 @@ const getUser = asyncHandler(async (req, res) => {
 		{ _id: req.params.id },
 		"-password -createdAt -lastPasswordUpdate -updatedAt"
 	).populate("recipes", "recipeName tribe ingredient");
-	res.json({ data: user });
+	if(!user) return res.json({message: `user with id ${req.params.id} does not exist`});
+	return res.json({ data: user });
 });
 
 const getUsers = asyncHandler(async (req, res) => {

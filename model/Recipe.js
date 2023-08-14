@@ -6,7 +6,6 @@ const recipeSchema = new mongoose.Schema(
 			type: String,
 			required: [true, "Enter the recipe name"],
 			unique: true,
-			immutable: true,
 		},
 
 		tribe: {

@@ -16,11 +16,12 @@ router.use(express.json());
 router.use(cors());
 router.use(cookieParser());
 
-router.get("/get-recipe/:id", isAuthorized, getRecipe);
-router.put("/update-recipe/:id", isAuthorized, updateRecipe);
-router.delete("/delete-recipe/:id", isAuthorized, deleteRecipe);
-router.post("/add-recipe", isAuthorized, addRecipe);
-router.get("/mymeals", isAuthorized, myMeals);
-router.get("/get-recipes", getRecipes);
+
+router.post("/recipe", isAuthorized, addRecipe);
+router.get("/my-meals", isAuthorized, myMeals);
+router.get("/all-recipes", getRecipes);
+router.delete("/:id", isAuthorized, deleteRecipe);
+router.get("/:id", isAuthorized, getRecipe);
+router.patch("/recipe/:id", isAuthorized, updateRecipe);
 
 module.exports = router;

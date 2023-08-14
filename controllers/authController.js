@@ -30,7 +30,7 @@ const login = asyncHandler(async (req, res) => {
 	const { username, password } = req.body;
 	const user = await User.findOne({ username });
 	if (!user)
-		return res.json({ data: null, message: "this user doesn't exist" });
+		return res.json({ data: null, message: "Incorrect credentials. Please enter correct password" });
 	const check = await bcrypt.compare(password, user.password);
 	if (!check)
 		return res.json({ data: null, message: "authentication failed" });

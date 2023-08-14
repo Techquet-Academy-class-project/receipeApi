@@ -36,15 +36,17 @@ const getRecipe = asyncHandler(async (req, res) => {
 });
 
 const updateRecipe = asyncHandler(async (req, res) => {
-	const recipe = await Recipe.findOneAndupdate({
-		_id: req.params._id,
-		createdBy: req.user._id,
-	});
-	if (!recipe)
+	const { recipeName, ...others } = req.body;
+	if (recipeName) return { message: "recipe name cannot be changed" };
+	const recipe = await Recipe.findOneAndUpdate(
+		{ _id: req.params._id, createdBy: req.user._id },
+		{ ...others });
+	if (!recipe) {
 		return res.json({
 			message: "You cannot update a recipe that's not yours",
 			success: false,
 		});
+	}
 	return res.json({ message: "recipe updated successfully", success: true });
 });
 
